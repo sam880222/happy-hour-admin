@@ -1,16 +1,7 @@
 import "./App.css";
 import { useEffect, useState } from "react";
 import { socket } from "./socket";
-import {
-  Box,
-  Button,
-  Card,
-  CardMedia,
-  Chip,
-  Grid,
-  Paper,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Card, CardMedia, Paper, Typography } from "@mui/material";
 import { getLeaderboard, getQuestion, proceedGame, restartGame } from "./api";
 import QuestionView from "./components/QuestionView";
 import LeaderboardView from "./components/LeaderboardView";
@@ -31,6 +22,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [question, setQuestion] = useState(null);
   const [leaderboard, setLeaderboard] = useState([]);
+  const [answeredCount, setAnsweredCount] = useState(0);
 
   useEffect(() => {
     function onConnect() {
@@ -69,10 +61,12 @@ function App() {
         case Stage.leaderboard:
           updateLeaderboard();
           setQuestion(null);
+          setAnsweredCount(0);
           break;
         default:
           setQuestion(null);
           setLeaderboard([]);
+          setAnsweredCount(0);
       }
     }
 
@@ -85,12 +79,19 @@ function App() {
       setLeaderboard([]);
     }
 
+    function onUpdateAnswerStatus(id, count) {
+      if (id === qid) {
+        setAnsweredCount(count);
+      }
+    }
+
     socket.on("connect", onConnect);
     socket.on("disconnect", onDisconnect);
     socket.on("message", onMessage);
     socket.on("updateUsers", onUpdateUsers);
     socket.on("updateQuestion", onUpdateQuestion);
     socket.on("restarted", onRestarted);
+    socket.on("answerStatus", onUpdateAnswerStatus);
 
     return () => {
       socket.off("connect", onConnect);
@@ -99,6 +100,7 @@ function App() {
       socket.off("updateUsers", onUpdateUsers);
       socket.off("updateQuestion", onUpdateQuestion);
       socket.off("restarted", onRestarted);
+      socket.off("answerStatus", onUpdateAnswerStatus);
     };
   });
 
@@ -113,12 +115,15 @@ function App() {
     setQuestion(question);
   };
 
+  // const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
   const onClickNext = async () => {
     if (isLoading) {
       return;
     }
     setIsLoading(true);
     await proceedGame();
+    // await sleep(10000);
     setIsLoading(false);
   };
 
@@ -164,6 +169,31 @@ function App() {
         boxSizing: "content-box",
       }}
     >
+      <Box
+        sx={{
+          width: "90%",
+          height: 48,
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "center",
+          position: "relative",
+        }}
+      >
+        {qid !== null && stage < Stage.answer && (
+          <Typography variant="h6">{`${answeredCount} / ${users.length} answered`}</Typography>
+        )}
+        {qid !== null && (
+          <Button
+            variant="outlined"
+            color="error"
+            sx={{ position: "absolute", right: 2 }}
+            onClick={onClickRestart}
+          >
+            Restart
+          </Button>
+        )}
+      </Box>
       <Paper
         variant="outlined"
         sx={{
@@ -233,16 +263,6 @@ function App() {
           </Button>
         </Box>
       </Paper>
-      {qid !== null && (
-        <Button
-          variant="outlined"
-          color="error"
-          sx={{ mt: 4, position: "fixed", top: "0.5%", right: "2%" }}
-          onClick={onClickRestart}
-        >
-          Restart
-        </Button>
-      )}
     </Box>
   );
 }
