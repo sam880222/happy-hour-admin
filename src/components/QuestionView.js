@@ -45,7 +45,7 @@ const QuestionView = ({ question, stage, showAnswer }) => {
               component="img"
               height="300"
               width="400"
-              image="happy-hour-admin/placeholder.jpg"
+              image="/happy-hour-admin/placeholder.jpg"
               alt={"hint " + index}
               sx={{
                 top: 0,

@@ -234,7 +234,7 @@ function App() {
                   component="img"
                   height="320"
                   width="320"
-                  image="happy-hour-admin/qr-code.png"
+                  image="/happy-hour-admin/qr-code.png"
                   alt="QR Code"
                 />
               </Card>
