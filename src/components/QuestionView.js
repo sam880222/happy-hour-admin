@@ -21,8 +21,8 @@ const QuestionView = ({ question, stage, showAnswer }) => {
           <Card
             key={"hint " + index}
             sx={{
-              scale: showAnswer ? 1 : stage === index ? 1.1 : 0.8,
-              height: 300,
+              scale: showAnswer ? 1 : stage === index ? 1.1 : 0.9,
+              height: 400,
               width: 400,
               transition: "all 0.5s ease",
               py: 0,
@@ -31,7 +31,7 @@ const QuestionView = ({ question, stage, showAnswer }) => {
           >
             <CardMedia
               component="img"
-              height="300"
+              height="400"
               width="400"
               image={question?.hints?.[index]}
               alt={"hint " + index}
@@ -43,7 +43,7 @@ const QuestionView = ({ question, stage, showAnswer }) => {
             />
             <CardMedia
               component="img"
-              height="300"
+              height="400"
               width="400"
               image="/happy-hour-admin/placeholder.jpg"
               alt={"hint " + index}
