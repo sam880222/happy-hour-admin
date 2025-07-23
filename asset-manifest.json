@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/happy-hour-admin/static/css/main.7d43364b.css",
-    "main.js": "/happy-hour-admin/static/js/main.3432ff64.js",
+    "main.js": "/happy-hour-admin/static/js/main.d34627be.js",
     "static/js/453.f2d17173.chunk.js": "/happy-hour-admin/static/js/453.f2d17173.chunk.js",
     "index.html": "/happy-hour-admin/index.html",
     "main.7d43364b.css.map": "/happy-hour-admin/static/css/main.7d43364b.css.map",
-    "main.3432ff64.js.map": "/happy-hour-admin/static/js/main.3432ff64.js.map",
+    "main.d34627be.js.map": "/happy-hour-admin/static/js/main.d34627be.js.map",
     "453.f2d17173.chunk.js.map": "/happy-hour-admin/static/js/453.f2d17173.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.7d43364b.css",
-    "static/js/main.3432ff64.js"
+    "static/js/main.d34627be.js"
   ]
 }
