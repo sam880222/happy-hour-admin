@@ -35,13 +35,17 @@ const QuestionView = ({ question, stage, showAnswer }) => {
               width="400"
               image={question?.hints?.[index]}
               alt={"hint " + index}
-              sx={{ objectFit: "contain", transition: "all 0.5s ease" }}
+              sx={{
+                objectFit: "contain",
+                opacity: stage >= index ? 1 : 0,
+                transition: "all 0.5s ease",
+              }}
             />
             <CardMedia
               component="img"
               height="300"
               width="400"
-              image="/placeholder.jpg"
+              image="happy-hour-admin/placeholder.jpg"
               alt={"hint " + index}
               sx={{
                 top: 0,
@@ -57,7 +61,7 @@ const QuestionView = ({ question, stage, showAnswer }) => {
       </Box>
       <Grid container width="90%" sx={{ mt: 4 }}>
         {question?.options?.map((selection, index) => (
-          <Grid size={6}>
+          <Grid size={6} key={selection}>
             <Chip
               label={String.fromCharCode(65 + index) + ". " + selection}
               sx={{

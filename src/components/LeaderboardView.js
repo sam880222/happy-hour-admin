@@ -11,6 +11,7 @@ const LeaderboardView = ({ data: users }) => {
           <Paper
             key={user?.name}
             sx={{
+              width: "100%",
               display: "flex",
               flexDirection: "row",
               alignItems: "center",
